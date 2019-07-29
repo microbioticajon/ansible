@@ -157,7 +157,7 @@ EXAMPLES = '''
       service_role: arn:aws:iam::<account>:role/service-role/<role>
       launch_template:
          launch_template_id: lt-0e06d290751193123
-         version: 1
+         version: "1"
 
   - name: show results
     debug: var=aws_batch_compute_environment_action
@@ -229,7 +229,7 @@ output:
       type: MANAGED
       launch_template:
          launch_template_id: "lt-0e06d290751193123"
-         version: 1
+         version: "1"
   type: dict
 '''
 
