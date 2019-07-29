@@ -113,6 +113,9 @@ options:
     description:
       - The Amazon Resource Name (ARN) of the Amazon EC2 Spot Fleet IAM role applied to a SPOT compute environment.
 
+  launch_template:
+     description:
+      - The Name/id and version of the launch template to use for your compute resources.
 
 requirements:
     - boto3
@@ -152,6 +155,9 @@ EXAMPLES = '''
         tag1: value1
         tag2: value2
       service_role: arn:aws:iam::<account>:role/service-role/<role>
+      launch_template:
+         launch_template_id: lt-0e06d290751193123
+         version: 1
 
   - name: show results
     debug: var=aws_batch_compute_environment_action
@@ -221,6 +227,9 @@ output:
       status: VALID
       statusReason: "ComputeEnvironment Healthy"
       type: MANAGED
+      launch_template:
+         launch_template_id: "lt-0e06d290751193123"
+         version: 1
   type: dict
 '''
 
@@ -322,7 +331,7 @@ def create_compute_environment(module, aws):
 
     compute_resources_param_list = ('minv_cpus', 'maxv_cpus', 'desiredv_cpus', 'instance_types', 'image_id', 'subnets',
                                     'security_group_ids', 'ec2_key_pair', 'instance_role', 'tags', 'bid_percentage',
-                                    'spot_iam_fleet_role')
+                                    'spot_iam_fleet_role', 'launch_template')
     compute_resources_params = set_api_params(module, compute_resources_param_list)
 
     if module.params['compute_resource_type'] is not None:
@@ -476,6 +485,7 @@ def main():
             bid_percentage=dict(type='int'),
             spot_iam_fleet_role=dict(),
             region=dict(aliases=['aws_region', 'ec2_region'])
+            launch_template=dict(type='dict')
         )
     )
 
