@@ -485,7 +485,7 @@ def main():
             bid_percentage=dict(type='int'),
             spot_iam_fleet_role=dict(),
             region=dict(aliases=['aws_region', 'ec2_region']),
-            launch_template=dict(type='dict')
+            launch_template=dict(type='dict', version_added='2.9')
         )
     )
 
