@@ -85,7 +85,7 @@ files:
   $modules/cloud/amazon/ecs_service_facts.py: willthames
   $modules/cloud/amazon/ecs_task.py: willthames
   $modules/cloud/amazon/ecs_taskdefinition.py: willthames
-  $modules/cloud/amazon/ecs_taskdefinition_facts.py: willthames
+  $modules/cloud/amazon/ecs_taskdefinition_info.py: willthames
   $modules/cloud/amazon/elasticache.py: alachaum
   $modules/cloud/amazon/elb_target_group_info.py: willthames
   $modules/cloud/amazon/iam.py: $team_ansible
@@ -312,6 +312,7 @@ files:
   $modules/network/edgeswitch/: f-bor
   $modules/network/enos/: amuraleedhar
   $modules/network/eos/: trishnaguha
+  $modules/network/eric_eccli/: itercheng
   $modules/network/exos/: rdvencioneck
   $modules/network/f5/:
     ignored: Etienne-Carriere mhite mryanlam perzizzle srvg JoeReifel $team_networking
@@ -334,6 +335,7 @@ files:
     maintainers: $team_iosxr
   $modules/network/ironware/: paulquack
   $modules/network/junos/: Qalthos ganeshrn
+  $modules/network/icx/: sushma-alethea
   $modules/network/layer2/: $team_networking
   $modules/network/layer3/: $team_networking
   $modules/network/meraki/: &meraki
@@ -531,10 +533,6 @@ files:
   $modules/windows/win_security_policy.py:
     <<: *windows
     maintainers: defionscode
-  bin/ansible-connection:
-    keywords:
-      - persistent connection
-    labels: networking
   contrib/:
     support: community
   contrib/inventory:
@@ -764,6 +762,10 @@ files:
   $module_utils/network/eos:
     support: network
     maintainers: $team_networking
+  $module_utils/network/eric_eccli:
+    support: network
+    maintainers: $team_networking
+                 itercheng
   $module_utils/network/exos:
     maintainers: rdvencioneck
   $module_utils/network/f5:
@@ -1055,6 +1057,10 @@ files:
   $plugins/cliconf/eos.py:
     support: network
     maintainers: $team_networking
+  $plugins/cliconf/eric_eccli.py:
+    support: network
+    maintainers: $team_networking
+                 itercheng
   $plugins/cliconf/exos.py:
     maintainers: rdvencioneck
   $plugins/cliconf/ios.py:
@@ -1360,6 +1366,9 @@ files:
   $plugins/terminal/eos.py:
     support: network
     maintainers: $team_networking
+  $plugins/terminal/eric_eccli.py:
+    support: community
+    maintainers: itercheng
   $plugins/terminal/exos.py:
     maintainers: rdvencioneck
   $plugins/terminal/ios.py:
@@ -1408,6 +1417,10 @@ files:
 
 ##############################
 # other lib
+  lib/ansible/cli/scripts/ansible_connection_cli_stub.py:
+    keywords:
+      - persistent connection
+    labels: networking
   lib/ansible/executor/powershell: *windows_core
   lib/ansible/template:
     keywords:
@@ -1451,16 +1464,16 @@ files:
   docs/docsite/rst/user_guide/windows: *windows_core
 ###############################
 # 'test' is a component path, then 'test' label will be automatically added
-  test/sanity/validate-modules:
+  test/lib/ansible_test/_data/sanity/validate-modules:
     notified:
       - mattclay
     keywords:
       - validate-modules
-  test/sanity/validate-modules/schema.py:
+  test/lib/ansible_test/_data/sanity/validate-modules/validate_modules/schema.py:
     notified:
       - gundalow
       - sivel
-  test/sanity/validate-modules/main.py:
+  test/lib/ansible_test/_data/sanity/validate-modules/validate_modules/main.py:
     notified:
       - gundalow
       - sivel
@@ -1507,15 +1520,18 @@ files:
   test/integration/targets/vultr: *vultr
   test/legacy/:
     notified: mattclay
-  test/runner/:
+  test/lib/:
     notified: mattclay
-  test/runner/lib/cloud/acme.py: *crypto
+  test/lib/ansible_test/_internal/cloud/acme.py: *crypto
   test/sanity/:
     notified: mattclay
   test/units/module_utils/docker/:
     <<: *docker
     support: community
   test/units/module_utils/facts/network/test_generic_bsd.py: *bsd
+  test/units/module_utils/test_netapp.py:
+    maintainers: $team_netapp
+    support: community
   test/units/module_utils/hwc:
     maintainers: $team_huawei
   test/units/module_utils/acme: *crypto
@@ -1543,8 +1559,6 @@ files:
   hacking/report.py:
     notified: mattclay
   shippable.yml:
-    notified: mattclay
-  tox.ini:
     notified: mattclay
 macros:
   module_utils: lib/ansible/module_utils
@@ -1586,7 +1600,7 @@ macros:
   team_macos: akasurde dagwieers kyleabenson martinm82
   team_manageiq: gtanzillo abellotti zgalor yaacov cben
   team_meraki: kbreit
-  team_mysql: Alexander198961 bmalynovytch bmildren michaelcoburn oneiroi tolland Xyon Andersson007
+  team_mysql: Alexander198961 bmalynovytch bmildren michaelcoburn oneiroi tolland Xyon Andersson007 kurtdavis
   team_netapp: hulquest lmprice ndswartz amit0701 schmots1 carchi8py lonico
   team_netbox: sieben anthony25 FragmentedPacket nikkytub pilou-
   team_netscaler: chiradeep giorgos-nikolopoulos

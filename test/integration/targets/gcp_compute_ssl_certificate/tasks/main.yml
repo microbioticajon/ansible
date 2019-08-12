@@ -83,9 +83,8 @@
   assert:
     that:
       - result.changed == true
-      - "result.kind == 'compute#sslCertificate'"
 - name: verify that ssl_certificate was created
-  gcp_compute_ssl_certificate_facts:
+  gcp_compute_ssl_certificate_info:
       filters:
          - name = {{ resource_name }}
       project: "{{ gcp_project }}"
@@ -136,7 +135,6 @@
   assert:
     that:
       - result.changed == false
-      - "result.kind == 'compute#sslCertificate'"
 #----------------------------------------------------------
 - name: delete a ssl certificate
   gcp_compute_ssl_certificate:
@@ -176,7 +174,7 @@
     that:
       - result.changed == true
 - name: verify that ssl_certificate was deleted
-  gcp_compute_ssl_certificate_facts:
+  gcp_compute_ssl_certificate_info:
       filters:
          - name = {{ resource_name }}
       project: "{{ gcp_project }}"

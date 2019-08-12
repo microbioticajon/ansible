@@ -285,12 +285,14 @@ options:
       type:
         description:
           - The mount type.
+          - Note that C(npipe) is only supported by Docker for Windows. Also note that C(npipe) was added in Ansible 2.9.
         type: str
         default: bind
         choices:
           - bind
           - volume
           - tmpfs
+          - npipe
       readonly:
         description:
           - Whether the mount should be read-only.
@@ -581,9 +583,6 @@ options:
           - Corresponds to the C(--rollback-order) option of C(docker service create).
           - Requires API version >= 1.29.
         type: str
-        choices:
-          - stop-first
-          - start-first
     type: dict
     version_added: "2.8"
   secrets:
@@ -695,9 +694,6 @@ options:
           - Corresponds to the C(--update-order) option of C(docker service create).
           - Requires API version >= 1.29.
         type: str
-        choices:
-          - stop-first
-          - start-first
     type: dict
     version_added: "2.8"
   update_delay:
@@ -2535,7 +2531,7 @@ def main():
             type=dict(
                 type='str',
                 default='bind',
-                choices=['bind', 'volume', 'tmpfs'],
+                choices=['bind', 'volume', 'tmpfs', 'npipe'],
             ),
             readonly=dict(type='bool'),
             labels=dict(type='dict'),

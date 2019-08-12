@@ -55,7 +55,7 @@ class GalaxyCLI(CLI):
         ''' create an options parser for bin/ansible '''
 
         super(GalaxyCLI, self).init_parser(
-            desc="Perform various Role related operations.",
+            desc="Perform various Role and Collection related operations.",
         )
 
         # common
@@ -413,7 +413,7 @@ class GalaxyCLI(CLI):
         obj_name = context.CLIARGS['{0}_name'.format(galaxy_type)]
 
         inject_data = dict(
-            description='your description',
+            description='your {0} description'.format(galaxy_type),
             ansible_plugin_list_dir=get_versioned_doclink('plugins/plugins.html'),
         )
         if galaxy_type == 'role':
@@ -525,7 +525,7 @@ class GalaxyCLI(CLI):
                 if not os.path.exists(b_dir_path):
                     os.makedirs(b_dir_path)
 
-        display.display("- %s was created successfully" % obj_name)
+        display.display("- %s %s was created successfully" % (galaxy_type.title(), obj_name))
 
     def execute_info(self):
         """
@@ -913,11 +913,8 @@ class GalaxyCLI(CLI):
             'FAILED': C.COLOR_ERROR,
         }
 
-        if len(context.CLIARGS['args']) < 2:
-            raise AnsibleError("Expected a github_username and github_repository. Use --help.")
-
-        github_user = to_text(context.CLIARGS['args'][0], errors='surrogate_or_strict')
-        github_repo = to_text(context.CLIARGS['args'][1], errors='surrogate_or_strict')
+        github_user = to_text(context.CLIARGS['github_user'], errors='surrogate_or_strict')
+        github_repo = to_text(context.CLIARGS['github_repo'], errors='surrogate_or_strict')
 
         if context.CLIARGS['check_status']:
             task = self.api.get_import_task(github_user=github_user, github_repo=github_repo)
